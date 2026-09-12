@@ -1,5 +1,17 @@
 # Routing Rules
 
+## Project Identity Routing Gate
+
+Project Identity Resolution runs before Current-stage Detection. Current-stage Detection must not begin until target project identity is confirmed.
+
+Only `PROJECT_IDENTITY_CONFIRMED` may continue into workflow / phase routing. `PROJECT_IDENTITY_INFERRED`, `PROJECT_IDENTITY_AMBIGUOUS`, `PROJECT_IDENTITY_UNKNOWN`, and `PROJECT_IDENTITY_CONFLICT` must STOP for confirmation, clarification, or conflict resolution.
+
+Evidence that may confirm project identity includes explicit project name or repository path in the current user message, clear unique unsuperseded current-conversation project context, trusted handoff identity that agrees with the request, or a repository that uniquely maps to one project.
+
+Memory, historical project records, recent activity, likely intent, model inference, and highest-ranked candidates may produce project candidates, but they do not confirm project identity by themselves. Do not choose a project merely because it is the most recent, most likely, or most active project when multiple plausible projects exist.
+
+Project Identity Confirmation does not verify repository baseline. After project identity is confirmed, repository reality, branch, HEAD, working tree, and baseline freshness must still be checked when a downstream route depends on them.
+
 ## Current-stage Detection
 
 Consider in order:

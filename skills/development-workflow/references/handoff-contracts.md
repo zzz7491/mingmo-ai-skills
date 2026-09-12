@@ -7,6 +7,9 @@ Map and preserve:
 - Workflow ID
 - Phase ID
 - Contract Version
+- Project Identity
+- Project Identity Status
+- Project Identity Evidence
 - Repository
 - Branch
 - Baseline HEAD
@@ -25,6 +28,8 @@ Map and preserve:
 - Next-stage Candidate
 - Next-stage Readiness
 - Next-stage Authorization
+
+Project Candidates may remain an orchestrator intake / output field and is not required as a long-term field in every downstream handoff.
 
 ## Handoff Trust
 

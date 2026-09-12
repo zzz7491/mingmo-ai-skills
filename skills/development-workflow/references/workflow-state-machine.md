@@ -7,6 +7,31 @@
 - `RECOVER WORKFLOW`: handoff missing, conflict, stale baseline, repository drift, scope conflict, Phase ID mismatch, or materially changed goal requires recovery.
 - `MID-WORKFLOW ENTRY`: the orchestrator is first invoked while the project appears to be in implementation, acceptance, closeout, or another middle stage. Verify existing contracts; do not trust user claims as state.
 
+
+## Project Identity States
+
+Stage 0 starts with Gate 0A: Project Identity Resolution. Gate 0A runs before workflow / phase routing.
+
+- `PROJECT_IDENTITY_CONFIRMED`: the target project is uniquely determined by explicit user input or trusted current context.
+- `PROJECT_IDENTITY_INFERRED`: a strong candidate exists, but project identity is not uniquely confirmed. Record the candidate, request confirmation, and STOP.
+- `PROJECT_IDENTITY_AMBIGUOUS`: multiple plausible projects exist. Request that the user choose the target project and STOP.
+- `PROJECT_IDENTITY_UNKNOWN`: project identity evidence is insufficient. Request a project name or repository and STOP.
+- `PROJECT_IDENTITY_CONFLICT`: identity evidence conflicts across user input, current conversation context, repository, trusted handoff, memory, or history. Report the conflict and STOP.
+
+Only `PROJECT_IDENTITY_CONFIRMED` may transition into workflow / phase routing. The other four states must STOP or wait for clarification.
+
+Gate 0A transition:
+
+```text
+User request
+-> Gate 0A Project Identity Resolution
+-> PROJECT_IDENTITY_CONFIRMED
+-> Gate 0B Workflow / Phase Identification
+-> Gate 0C Handoff / Baseline / Authorization Intake
+```
+
+Do not use recency, likelihood, activity, memory, or model inference alone to move from Gate 0A into Gate 0B.
+
 ## Workflow States
 
 - `INTAKE`
